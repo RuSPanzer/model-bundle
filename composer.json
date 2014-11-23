@@ -1,0 +1,57 @@
+{
+    "name": "meniam/model-bundle",
+    "description": "Integration of Model in Symfony2",
+    "keywords": ["model"],
+    "type": "model-bundle",
+    "license": "MIT",
+    "authors": [{
+        "name": "Eugene Myazin",
+        "email": "meniam@gmail.com"
+    }],
+
+    "require": {
+        "php"           :">=5.4.0,<5.6",
+        "symfony/symfony": "~2.4",
+        "meniam/model" : "2.0.*",
+        "doctrine/annotations"   : ">=1.0",
+        "zendframework/zendframework": "2.3.*"
+    },
+
+    "repositories":[
+        {
+            "type":"package",
+            "package":{
+                "name":"meniam/model",
+                "version":"v2.0.1",
+                "source":{
+                    "type":"git",
+                    "url":"git@github.com:meniam/model.git",
+                    "reference": "symfony"
+                },
+
+                "autoload": {
+                    "psr-0": {
+                        "Model": "library/"
+                    }
+                }
+            }
+        },
+        {
+            "type": "composer",
+            "url": "https://packages.zendframework.com/"
+        }
+    ],
+
+    "require-dev": {
+        "sensio/framework-extra-bundle": "~3.0",
+        "fzaninotto/faker": "dev-master"
+    },
+
+    "target-dir": "Model/ModelBundle",
+
+    "autoload": {
+        "psr-0": { "Model\\ModelBundle": "" }
+    },
+
+    "minimum-stability": "dev"
+}
