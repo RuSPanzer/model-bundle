@@ -42,10 +42,10 @@ class Configuration implements ConfigurationInterface
     public function addValidatorAdapterNode(ArrayNodeDefinition $node)
     {
         $node
-            ->children()
-            ->scalarNode('validator_adapter')
-                ->defaultNull()
-                ->end()
+            ->fixXmlConfig('validator_adapter')
+                ->children()
+                    ->scalarNode('validator_adapter')->defaultNull()->end()
+            ->end()
         ;
     }
 
