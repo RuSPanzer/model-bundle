@@ -45,7 +45,6 @@ class Configuration implements ConfigurationInterface
             ->children()
             ->scalarNode('validator_adapter')
                 ->defaultNull()
-                ->fixXmlConfig('validation_adapter')
                 ->end()
         ;
     }
