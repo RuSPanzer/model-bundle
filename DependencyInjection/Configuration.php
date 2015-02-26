@@ -31,24 +31,39 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('model');
 
         $this->addDbalSection($rootNode);
+        $this->addValidatorAdapterNode($rootNode);
 
         return $treeBuilder;
+    }
+
+    /**
+     * @param ArrayNodeDefinition $node
+     */
+    public function addValidatorAdapterNode(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+            ->scalarNode('validator_adapter')
+                ->defaultNull()
+                ->fixXmlConfig('validation_adapter')
+                ->end()
+        ;
     }
 
 
     /**
      * Adds 'dbal' configuration.
      *
-     * propel:
+     * model:
      *     dbal:
-     *         driver:      mysql
-     *         user:        root
-     *         password:    null
-     *         dsn:         xxxxxxxx
-     *         options:     {}
-     *         attributes:  {}
-     *         settings:    {}
-     *         default_connection:  xxxxxx
+     *         connections:
+     *             user:        root
+     *             password:    null
+     *             dsn:         xxxxxxxx
+     *             options:     {}
+     *             attributes:  {}
+     *             settings:    {}
+     *             default_connection:  xxxxxx
      */
    private function addDbalSection(ArrayNodeDefinition $node)
     {
@@ -70,7 +85,6 @@ class Configuration implements ConfigurationInterface
      *
      * connections:
      *     default:
-     *         driver:      mysql
      *         user:        root
      *         password:    null
      *         dsn:         xxxxxxxx
