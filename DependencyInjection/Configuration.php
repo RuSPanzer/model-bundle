@@ -61,11 +61,8 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->fixXmlConfig('connection')
                     ->append($this->getDbalConnectionsNode())
-                ->end()
-                ->fixXmlConfig('validation_adapter')
-                    ->children()
-                        ->scalarNode('validator_adapter')->defaultNull()->end()
-                    ->end()
+                ->children()
+                    ->scalarNode('validator_adapter')->defaultNull()->end()
                 ->end()
             ->end()
         ;
