@@ -31,7 +31,6 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('model');
 
         $this->addDbalSection($rootNode);
-        $this->addValidatorAdapterNode($rootNode);
 
         return $treeBuilder;
     }
@@ -42,9 +41,10 @@ class Configuration implements ConfigurationInterface
     public function addValidatorAdapterNode(ArrayNodeDefinition $node)
     {
         $node
-            ->fixXmlConfig('validator_adapter')
+            ->fixXmlConfig('validation_adapter')
                 ->children()
                     ->scalarNode('validator_adapter')->defaultNull()->end()
+                ->end()
             ->end()
         ;
     }
@@ -77,6 +77,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getDbalConnectionsNode())
             ->end()
         ;
+        $this->addValidatorAdapterNode($node);
     }
 
     /**
