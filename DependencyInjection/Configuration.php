@@ -42,13 +42,14 @@ class Configuration implements ConfigurationInterface
      * model:
      *     dbal:
      *         connections:
-     *             user:        root
-     *             password:    null
-     *             dsn:         xxxxxxxx
-     *             options:     {}
-     *             attributes:  {}
-     *             settings:    {}
-     *             default_connection:  xxxxxx
+     *              default:
+     *                  user:        root
+     *                  password:    null
+     *                  dsn:         xxxxxxxx
+     *                  options:     {}
+     *                  attributes:  {}
+     *                  settings:    {}
+     *                  default_connection:  xxxxxx
      */
    private function addDbalSection(ArrayNodeDefinition $node)
     {
@@ -62,7 +63,7 @@ class Configuration implements ConfigurationInterface
                 ->fixXmlConfig('connection')
                     ->append($this->getDbalConnectionsNode())
                 ->children()
-                    ->scalarNode('validator_adapter')->defaultNull()->end()
+                    ->scalarNode('validator_adapter')->defaultValue('Model\Validator\Adapter\Symfony')->end()
                 ->end()
             ->end()
         ;
