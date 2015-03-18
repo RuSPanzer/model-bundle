@@ -31,6 +31,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('model');
 
         $this->addDbalSection($rootNode);
+        $this->addGeneratorSection($rootNode);
 
         return $treeBuilder;
     }
@@ -39,17 +40,16 @@ class Configuration implements ConfigurationInterface
     /**
      * Adds 'dbal' configuration.
      *
-     * model:
-     *     dbal:
-     *         connections:
-     *              default:
-     *                  user:        root
-     *                  password:    null
-     *                  dsn:         xxxxxxxx
-     *                  options:     {}
-     *                  attributes:  {}
-     *                  settings:    {}
-     *                  default_connection:  xxxxxx
+     * dbal:
+     *     connections:
+     *          default:
+     *              user:        root
+     *              password:    null
+     *              dsn:         xxxxxxxx
+     *              options:     {}
+     *              attributes:  {}
+     *              settings:    {}
+     *              default_connection:  xxxxxx
      */
    private function addDbalSection(ArrayNodeDefinition $node)
     {
@@ -63,9 +63,45 @@ class Configuration implements ConfigurationInterface
                 ->fixXmlConfig('connection')
                     ->append($this->getDbalConnectionsNode())
                 ->children()
-                    ->scalarNode('validator_adapter')->defaultValue('Model\Validator\Adapter\Symfony')->end()
+                    ->scalarNode('validator_adapter')->defaultNull()->end()
                 ->end()
             ->end()
+        ;
+    }
+
+    /**
+     * Adds 'generator' configuration.
+     *
+     * generator:
+     *     connections:
+     *          output_dir: xxxx
+     *          deploy_dir: xxxx
+     *          config: xxxx
+     */
+    private function addGeneratorSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('generator')
+                    ->beforeNormalization()
+                        ->ifNull()
+                        ->then(function($v) { return array (); })
+                    ->end()
+                    ->fixXmlConfig('output-dir', 'deploy-dir')
+                    ->children()
+                        ->scalarNode('output_dir')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                        ->end()
+                        ->scalarNode('deploy_dir')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                        ->end()
+                        ->scalarNode('config')
+                            ->defaultNull()
+                        ->end()
+                    ->end()
+                ->end()
         ;
     }
 
