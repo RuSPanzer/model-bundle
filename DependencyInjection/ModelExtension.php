@@ -2,6 +2,7 @@
 
 namespace Model\ModelBundle\DependencyInjection;
 
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -30,6 +31,10 @@ class ModelExtension extends Extension
 
         if (!empty($config['dbal'])) {
             $this->dbalLoad($config['dbal'], $container);
+        }
+
+        if (!empty($config['generator'])) {
+            $container->setParameter('model.configuration.generator', $config['generator']);
         }
     }
 
