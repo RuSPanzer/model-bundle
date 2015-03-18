@@ -9,6 +9,9 @@
     </parameters>
 
     <services>
+        <service id="model.command.model_command" class="Model\ModelBundle\Command\ModelCommand">
+            <tag name="console.command"/>
+        </service>
         <service id="model.configuration" class="%model.configuration.class%" />
     </services>
 </container>
